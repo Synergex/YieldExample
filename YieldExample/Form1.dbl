@@ -1,0 +1,169 @@
+import System
+import System.Collections.Generic
+import System.ComponentModel
+import System.Data
+import System.Drawing
+import System.Windows.Forms
+import System.Collections
+
+namespace YieldExample
+
+	public class ReadFile
+
+		public static method getrecs	,@IEnumerable		; Method must return an enumerator object to use YIELD
+			req a_fchn		,int
+			opt a_get10		,d
+			endparams
+		proc
+			data dataarea		,a 65534					;65534 is the largest value for an ISAM record length in 32-bit Windows Synergy
+			data counter		,int
+
+			repeat
+			begin
+				if a_get10 == 1 && counter == 10			;Test to see if called to only return 10 records 
+				begin
+					init counter
+					yield exit								;Immediately breaks out of loop and returns to calling routine 
+				end
+				reads(a_fchn,dataarea, eof)
+				counter +=1
+				yield mreturn %atrim(dataarea)				;Returns to calling routine but maintains context in loop
+			end
+		eof,
+			begin
+				nop
+			end
+		endmethod
+				
+	endclass
+;-------------------------------------------------------------------------------------------------------------------------------------
+	public partial class Form1 extends System.Windows.Forms.Form
+
+.define D_FILE		"DBLDIR:syntxt.ism"			;File to read
+.define D_COLWIDTH	50							;Record number column width
+.define D_DONE		"Done retrieving " + %string(counter) + " records"
+
+		private fchn			,int		,0
+		private counter			,int		,0
+		private info			,int		,0
+		private listcompleted	,boolean	,false
+		private dataarea		,a 65535
+		private doneflag		,boolean	,false		
+		    
+        public method Form1
+            endparams
+        proc
+			this.InitializeComponent()
+
+			this.Text = "Simple YIELD example using " + D_FILE
+			label3.Text = "Number of Records in the "    + D_FILE + " file"
+
+			;Set up DataGridView
+			dataGridView1.Columns.Add("Counter","Record Number")
+			dataGridView1.Columns.Add("AllFields","Syntxt Messages")
+
+			dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+			data column0		,@DataGridViewColumn , dataGridView1.Columns[0]
+			data column1		,@DataGridViewColumn , dataGridView1.Columns[1]
+			column0.Width = D_COLWIDTH
+			column1.Width = dataGridView1.Width - dataGridView1.Columns[0].Width - D_COLWIDTH
+
+			;Open the syntxt ISAM file in input mode
+			open(fchn=0, I:I, D_FILE)
+
+			;Get number of records in syntxt ISAM file
+			info = %isinfo(fchn,"NUMRECS")	
+			textBox3.text = info
+		endmethod
+			
+;-------------------------------------------------------------------------------------------------------------------------------------		
+		private method GetAllRecs, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+
+		proc
+			find(fchn,,^FIRST)					;Make sure position to beginning of file
+			button2.Enabled=false
+			
+			dataGridView1.Rows.Clear()
+			init counter
+
+			foreach dataarea in YieldExample.ReadFile.getrecs(fchn)
+			begin
+				try
+				begin
+					textBox1.text = counter+=1
+					dataGridView1.Rows.Add(counter.ToString() , %atrim(dataarea))
+					textBox2.Text = %atrim(dataarea)
+					Application.DoEvents()
+				end
+				catch(ex)
+				begin
+					MessageBox.Show(ex.Message)
+				end
+				endtry
+			end
+
+			MessageBox.Show(D_DONE)
+			listcompleted = true
+			button2.Enabled=true
+			find(fchn,,^FIRST)
+			init counter
+
+			mreturn
+
+		endmethod		
+
+;-------------------------------------------------------------------------------------------------------------------------------------		
+		private method Get10Recs, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+		proc
+			if doneflag == true 
+			begin
+				dataGridView1.Rows.Clear()
+				doneflag = false			
+				init counter
+			end
+			
+			button1.Enabled=false
+			button2.Enabled=false
+
+			if listcompleted
+			begin
+				dataGridView1.Rows.Clear()
+				listcompleted = false
+			end
+						
+			foreach dataarea in YieldExample.ReadFile.getrecs(fchn , 1)							;Pass 1 as second parameter to implement yield exit to return 10 records at a time
+			begin
+				try
+				begin
+					textBox1.text = counter+=1
+					dataGridView1.Rows.Add(counter.ToString() , %atrim(dataarea))
+					textBox2.Text = %atrim(dataarea)
+				end
+				catch(ex)
+				begin
+					MessageBox.Show(ex.Message)
+				end
+				endtry
+			end
+
+			if counter ==  info
+			begin
+				find(fchn,,^FIRST)
+				doneflag = true
+				MessageBox.Show(D_DONE)
+			end
+
+			button1.Enabled = true
+			button2.Enabled = true
+
+			mreturn			
+		endmethod
+		
+    endclass
+endnamespace

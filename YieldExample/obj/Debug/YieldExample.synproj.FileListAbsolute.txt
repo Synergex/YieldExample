@@ -1,0 +1,7 @@
+D:\Temp\Yield\YieldExample\YieldExample\bin\Debug\YieldExample.exe
+D:\Temp\Yield\YieldExample\YieldExample\bin\Debug\YieldExample.pdb
+D:\Temp\Yield\YieldExample\YieldExample\obj\Debug\YieldExample.ReadFile.resources
+D:\Temp\Yield\YieldExample\YieldExample\obj\Debug\YieldExample.Properties.Resources.resources
+D:\Temp\Yield\YieldExample\YieldExample\obj\Debug\YieldExample.synproj.GenerateResource.Cache
+D:\Temp\Yield\YieldExample\YieldExample\obj\Debug\YieldExample.exe
+D:\Temp\Yield\YieldExample\YieldExample\obj\Debug\YieldExample.pdb

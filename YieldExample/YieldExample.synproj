@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>"YieldExample"</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{916d6af1-c5dd-49ee-8eec-9f90f0779922}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>YieldExample</RootNamespace>
+    <AssemblyName>YieldExample</AssemblyName>
+    <MainFile>Program.dbl</MainFile>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <TargetPlatform>v452</TargetPlatform>
+    <DBL_qWarnLevel>3 - Don't display warning levels higher than 3</DBL_qWarnLevel>
+    <DBL_qWarn>True</DBL_qWarn>
+    <DBLCmdOptions> -W3 -qstack</DBLCmdOptions>
+    <Language>Synergy</Language>
+    <DBL_unQulRecStm>Stack</DBL_unQulRecStm>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+    <OutputPath>bin\Debug\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DebugOptimize>Debug</DebugOptimize>
+    <DocumentationFile>bin\Debug\YieldExample.xml</DocumentationFile>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+    <OutputPath>bin\Release\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DebugOptimize>Optimize</DebugOptimize>
+    <DocumentationFile>bin\Release\YieldExample.xml</DocumentationFile>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="synrnt">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form1.dbl">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.designer.dbl">
+      <DependentUpon>Form1.dbl</DependentUpon>
+    </Compile>
+    <Compile Include="Program.dbl" />
+    <Compile Include="Properties\AssemblyInfo.dbl" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.dbl</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.designer.dbl</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.designer.dbl">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Properties\Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Properties\Settings.designer.dbl</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.designer.dbl">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Properties\Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataSources\" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataSources\Form1.%24%24_%24DATA%40button1_Click_1695059315.datasource">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="DataSources\Form1.%24%24_wrap_%24DATA%40button1_Click_1695059315.%24backstruct.datasource">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="DataSources\Form1.%24%24_wrap_%24DATA%40button1_Click_1695059315.datasource">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="DataSources\ReadFile.%24lc1594842955_getrecs.%24%24_#layout.datasource">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="DataSources\ReadFile.%24lc1594842955_getrecs.%24%24_Super%40%24lc1594842955_getrecs.datasource">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="DataSources\ReadFile.%24lc1594842955_getrecs.%24backstruct.datasource">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="DataSources\ReadFile.%24lc1594842955_getrecs.datasource">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="DataSources\ReadFile.datasource">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Synergex\VS2010\Synergex.SynergyDE.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
