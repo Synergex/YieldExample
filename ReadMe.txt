@@ -17,4 +17,4 @@ Description:    A simple  Synergy .NET Visual Studio project that
 
 		The records are displayed in a DataGridView control. 
 
-Requirements:    Visual Studio 2015 and Synergy 10.1.1 or higher
+Requirements:    Visual Studio 2015 and Synergy 10.1.1 or higher.
